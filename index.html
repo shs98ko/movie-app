@@ -1,19 +1,43 @@
-<!DOCTYPE html>
-<head>
-</head>
-<body>
+<!doctype html>
+<html>
+  <head> </head>
+  <body>
     <div id="root"></div>
-</body>
-<!-- interactive한 ui를 만드는 역할 -->
-<script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>  
-<!-- react element를 html에 두는 역할   -->
-<script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script> 
-<!-- vanilla js와 다르게 react js는
+
+    <!-- interactive한 ui를 만드는 역할 -->
+    <script
+      crossorigin
+      src="https://unpkg.com/react@18/umd/react.production.min.js"
+    ></script>
+    <!-- react element를 html에 두는 역할   -->
+    <script
+      crossorigin
+      src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"
+    ></script>
+    <!-- vanilla js와 다르게 react js는
 html에 element를 만들고 js에서 수정하고 조작하는 것이 아닌
 js 에서 element를 만들어 html에 붙혀 ui를 만들고 수정하고 조작한다 -->
-<script>
-    const root = document.getElementById("root");
-    const span = React.createElement("span", {id: "sexy-span", style: {color: "red"}}, "Hellooo I'm span~!");
-    ReactDOM.createRoot(root).render(span);
-</script>
+    <script>
+      const root = document.getElementById("root");
+      const span = React.createElement(
+        "h3",
+        {
+          id: "sexy-span",
+          onMouseEnter: () => console.log("mouse enter"),
+          style: { color: "red" },
+        },
+        "Hellooo I'm span~!",
+      );
+      const btn = React.createElement(
+        "button",
+        {
+          onClick: () => console.log("I'm click!"),
+          style: { backgroundColor: "tomato" },
+        },
+        "Click Me!",
+      );
+      const container = React.createElement("div", null, [span, btn]);
+      ReactDOM.createRoot(root).render(container);
+    </script>
+  </body>
 </html>
