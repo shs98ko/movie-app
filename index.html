@@ -17,27 +17,31 @@
     <!-- vanilla js와 다르게 react js는
 html에 element를 만들고 js에서 수정하고 조작하는 것이 아닌
 js 에서 element를 만들어 html에 붙혀 ui를 만들고 수정하고 조작한다 -->
-    <script>
+    <!-- babel-jsx로 적은 코드를 브라우저가 이해할 수 있는 형태로 바꾸줌 -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script type="text/babel">
       const root = document.getElementById("root");
-      const span = React.createElement(
-        "h3",
-        {
-          id: "sexy-span",
-          onMouseEnter: () => console.log("mouse enter"),
-          style: { color: "red" },
-        },
-        "Hellooo I'm span~!",
+      const Title = (
+        <h3
+          id="title"
+          style={{ color: "red" }}
+          onMouseEnter={() => console.log("mouse enter")}
+        >
+          Hellooo I'm span!!~!
+        </h3>
       );
-      const btn = React.createElement(
-        "button",
-        {
-          onClick: () => console.log("I'm click!"),
-          style: { backgroundColor: "tomato" },
-        },
-        "Click Me!",
+
+      const Button = (
+        <button
+          style={{ backgroundColor: "tomato" }}
+          onClick={() => console.log("I'm click!")}
+        >
+          Click Me!
+        </button>
       );
-      const container = React.createElement("div", null, [span, btn]);
-      ReactDOM.createRoot(root).render(container);
+
+      const Container = createElement("div", null, [span, btn]);
+      ReactDOM.createRoot(root).render(Container);
     </script>
   </body>
 </html>
