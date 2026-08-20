@@ -24,36 +24,29 @@ js 에서 element를 만들어 html에 붙혀 ui를 만들고 수정하고 조�
       const root = document.getElementById("root");
 
       function App() {
-        /*
-        const data = React.useState();
-        const counter = data[0];
-        // state가 변할때 자동으로 Rerendering하도록 함
-        const modifier = data[1];
-        */
-        const [counter, setCounter] = React.useState(0);
-        const onClick = () => {
-          //setCounter(counter + 1);
-          //함수로 현재 state를 파라미터로 넘겨줘서 state값을 reRendering하는 방식이 안전하다.
-          setCounter((current) => current + 1);
+        const [minutes, setMinutes] = React.useState();
+        const onChange = (event) => {
+          console.log(event.target.value);
+          setMinutes(event.target.value);
         };
         return (
+          //class => className
+          //for => htmlFor
           <div>
-            <h3>Total Clicks : {counter}</h3>
-            <button onClick={onClick}>Click Me!</button>
+            <h1 className="hi">Super Converter</h1>
+            <label htmlFor="minutes">Minutes</label>
+            <input
+              value={minutes}
+              placeholder="Minutes"
+              type="number"
+              id="minutes"
+              onChange={onChange}
+            />
+            <h3>CONVERT {minutes}</h3>
+            <label htmlFor="hours">Hours</label>
+            <input placeholder="Hours" type="number" id="hours" />
           </div>
         );
-
-        /*
-        const food = ['tomato', 'potato'];
-        ------
-
-        const myFavFood = food[0];
-        => 'tomato'
-        ------
-        const [myFavFood, mySecondFavFood] = food
-        myFavFood
-        => 'tomato'
-        */
       }
       // Rendering할 때 전체를 재생성할 것 같지만 바뀐 부분만 재생성한다
       ReactDOM.createRoot(root).render(<App />);
