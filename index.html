@@ -24,17 +24,20 @@ js 에서 element를 만들어 html에 붙혀 ui를 만들고 수정하고 조�
       const root = document.getElementById("root");
 
       function App() {
-        // state가 변할때 자동으로 Rerendering하도록 함
         /*
         const data = React.useState();
         const counter = data[0];
+        // state가 변할때 자동으로 Rerendering하도록 함
         const modifier = data[1];
         */
-        const [counter, modifier] = React.useState(0);
+        const [counter, setCounter] = React.useState(0);
+        const onClick = () => {
+          setCounter(counter + 1);
+        };
         return (
           <div>
             <h3>Total Clicks : {counter}</h3>
-            <button>Click Me!</button>
+            <button onClick={onClick}>Click Me!</button>
           </div>
         );
 
