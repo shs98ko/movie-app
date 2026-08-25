@@ -14,125 +14,67 @@
       crossorigin
       src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"
     ></script>
-    <!-- vanilla js와 다르게 react js는
-html에 element를 만들고 js에서 수정하고 조작하는 것이 아닌
-js 에서 element를 만들어 html에 붙혀 ui를 만들고 수정하고 조작한다 -->
-    <!-- babel-jsx로 적은 코드를 브라우저가 이해할 수 있는 형태로 바꾸줌 -->
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     <script type="text/babel">
-      //state : 기본적으로 데이터를 저장하는 곳.
-      const root = document.getElementById("root");
-      function MinutesToHours() {
-        const [amount, setAmount] = React.useState(0);
-        const [inverted, setInverted] = React.useState(false);
-        const onChange = (event) => {
-          console.log(event.target.value);
-          setAmount(event.target.value);
-        };
+      // -- Props --
+      // 부모 컴포넌트로부터 자식 컴포넌트에 데이터를 보낼 수 있게 해주는 방법
 
-        const reset = () => setAmount(0);
-        const onInvert = () => {
-          reset();
-          setInverted(!inverted);
-        };
+      /*
+        const Btn = (props) => {
+        console.log(props);
         return (
-          <div>
-            <div>
-              <label htmlFor="minutes">Minutes</label>
-              <input
-                value={inverted ? amount * 60 : amount}
-                placeholder="Minutes"
-                type="number"
-                id="minutes"
-                onChange={onChange}
-                disabled={inverted}
-              />
-            </div>
-            <div>
-              <label htmlFor="hours">Hours</label>
-              <input
-                value={inverted ? amount : Math.round(amount / 60)}
-                placeholder="Hours"
-                type="number"
-                id="hours"
-                disabled={!inverted}
-                onChange={onChange}
-              />
-            </div>
-            <button onClick={reset}>reset</button>
-            <button onClick={onInvert}>
-              {inverted ? "minutes->hours" : "hours->minutes"}
-            </button>
-          </div>
+          <button
+            style={{
+              backgroundColor: "tomato",
+              color: "white",
+              padding: "10px 20px",
+              border: 0,
+              borderRadius: 10,
+            }}
+          >
+            {props.banana}
+          </button>
         );
-      }
-      function KmToMiles() {
-        const [amount, setAmount] = React.useState(0);
-        const [inverted, setInverted] = React.useState(false);
-        const onChange = (event) => {
-          console.log(event.target.value);
-          setAmount(event.target.value);
-        };
+      };
+      */
+      const Btn = ({ banana, big }) => {
+        console.log(banana, big);
 
-        const reset = () => setAmount(0);
-        const onInvert = () => {
-          reset();
-          setInverted(!inverted);
-        };
         return (
-          <div>
-            <div>
-              <label htmlFor="km">Km</label>
-              <input
-                value={inverted ? amount * 1.609344 : amount}
-                placeholder="Km"
-                type="number"
-                id="km"
-                onChange={onChange}
-                disabled={inverted}
-              />
-            </div>
-            <div>
-              <label htmlFor="miles">miles</label>
-              <input
-                value={inverted ? amount : Math.round(amount * 0.62137)}
-                placeholder="miles"
-                type="number"
-                id="miles"
-                disabled={!inverted}
-                onChange={onChange}
-              />
-            </div>
-            <button onClick={reset}>reset</button>
-            <button onClick={onInvert}>
-              {inverted ? "km->miles" : "miles->km"}
-            </button>
-          </div>
+          <button
+            style={{
+              backgroundColor: "tomato",
+              color: "white",
+              padding: "10px 20px",
+              border: 0,
+              borderRadius: 10,
+              fontSize: big ? 20 : 10,
+            }}
+          >
+            {banana}
+          </button>
         );
-      }
-
+      };
+      //App, Btn은 함수형 컴포넌트임
       function App() {
-        const [index, setIndex] = React.useState("init");
-        const onChange = (event) => {
-          console.log(event.target.value);
-          setIndex(event.target.value);
-        };
         return (
           <div>
-            <h1 className="hi">Super Converter</h1>
-            <select onChange={onChange}>
-              <option value="init">Select your unit</option>
-              <option value="0">minutes & hours</option>
-              <option value="1">km & miles</option>
-            </select>
-            <hr />
-            {index === "init" ? <span>Please select ur unit</span> : null}
-            {index === "0" ? <MinutesToHours /> : null}
-            {index === "1" ? <KmToMiles /> : null}
+            <Btn banana="Save changes" big={true} />
+            <Btn banana="Continue" big={false} />
           </div>
         );
+
+        /*
+        return 
+        (<div>
+         Btn({banana:"save changes" x={false}}) 
+         <Btn banana="save changes" y={7}/>
+         Btn({banana:"Continue"}) 
+         <Btn banana="Continue"/>
+        </div>)
+        */
       }
-      // Rendering할 때 전체를 재생성할 것 같지만 바뀐 부분만 재생성한다
+      const root = document.getElementById("root");
       ReactDOM.createRoot(root).render(<App />);
     </script>
   </body>
