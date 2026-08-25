@@ -32,47 +32,46 @@
               borderRadius: 10,
             }}
           >
-            {props.banana}
+            {props.text}
           </button>
         );
       };
       */
-      const Btn = ({ banana, big }) => {
-        console.log(banana, big);
+      const Btn = ({ text, changeValue }) => {
+        console.log(text, "was rendered");
 
         return (
           <button
+            onClick={changeValue}
             style={{
               backgroundColor: "tomato",
               color: "white",
               padding: "10px 20px",
               border: 0,
               borderRadius: 10,
-              fontSize: big ? 20 : 10,
             }}
           >
-            {banana}
+            {text}
           </button>
         );
       };
       //App, Btn은 함수형 컴포넌트임
+
+      const MemorizedBtn = React.memo(Btn);
+      // Btn 컴포넌트 내부에 함수를 적으면 이것은 props다!
+      // eventListener가 아니라
       function App() {
+        const [value, setValue] = React.useState("Save Changes");
+        const changeValue = () => setValue("Revert Changes");
+        // --React Memo
+        //state와 연결된 Props(value)이 변경된다면 return 전부 re-render된다
+        //하지만 변경되지 않은 부분은 re-render을 할지 말지 결정할 수 있다.
         return (
           <div>
-            <Btn banana="Save changes" big={true} />
-            <Btn banana="Continue" big={false} />
+            <MemorizedBtn text={value} changeValue={changeValue} />
+            <MemorizedBtn text="Continue" />
           </div>
         );
-
-        /*
-        return 
-        (<div>
-         Btn({banana:"save changes" x={false}}) 
-         <Btn banana="save changes" y={7}/>
-         Btn({banana:"Continue"}) 
-         <Btn banana="Continue"/>
-        </div>)
-        */
       }
       const root = document.getElementById("root");
       ReactDOM.createRoot(root).render(<App />);
