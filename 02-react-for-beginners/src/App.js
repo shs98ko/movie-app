@@ -1,33 +1,33 @@
-import { useState, useEffect } from "react";
-
-const Hello = () => {
-  // Hello 컴포넌트는 현재 showing에 따라 삭제, 생성을 반복한다.
-  useEffect(() => {
-    console.log("created :)");
-    return () => console.log("destroyed :(");
-  }, []);
-
-  //byFn = cleanup function
-  /* function byFn() {
-    console.log("destroyed :(");
-  }
-  function hiFn() {
-    console.log("created :)");
-    return byFn;
-  }
-  useEffect(hiFn, []); */
-
-  return <h1>Hello</h1>;
-};
+import { useState } from "react";
 
 function App() {
-  const [showing, setShowing] = useState(false);
-  const onChange = () => setShowing((prev) => !prev);
+  const [toDo, setTodo] = useState("");
+  const [toDos, setTodos] = useState([]);
+  const onChange = (event) => setTodo(event.target.value);
+
+  const onSubmit = (event) => {
+    event.preventDefault();
+    if (toDo == "") {
+      return;
+    }
+    setTodos((currentArray) => [toDo, ...currentArray]);
+    setTodo("");
+    console.log(toDo);
+  };
+  console.log(toDos);
 
   return (
     <div className="App">
-      {showing ? <Hello /> : null}
-      <button onClick={onChange}> {showing ? "hide" : "show"} </button>
+      <h1>My To Dos ({toDos.length})</h1>
+      <form onSubmit={onSubmit}>
+        <input
+          value={toDo}
+          onChange={onChange}
+          type="text"
+          placeholder="Write your todo..."
+        />
+        <button>Add To do</button>
+      </form>
     </div>
   );
 }
