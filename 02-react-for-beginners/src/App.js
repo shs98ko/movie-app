@@ -27,9 +27,20 @@ function App() {
           placeholder="Write your todo..."
         />
         <button>Add To do</button>
+        <hr />
+        <ul>
+          {toDos.map((item, key) => (
+            <li key={key}>{item}</li>
+          ))}
+        </ul>
       </form>
     </div>
   );
 }
-
+// map
+// array = ['1','2','3','4','5']
+// array.map(()=>"a"); 배열 안의 원소 5개 전부 'a'로 바꾼다.
+// =>array= ['a','a','a','a','a']
+// array.map((item)=>item+'s')
+// =>array= ['as','as','as','as','as']
 export default App;
