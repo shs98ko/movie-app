@@ -1,56 +1,43 @@
 import { useEffect, useState } from "react";
 
 function App() {
-  const [loading, setLoading] = useState("true");
-  const [coins, setCoin] = useState([]);
-  const [index, setIndex] = useState("init");
-  const [usd, setUSD] = useState("0");
-  useEffect(() => {
-    fetch("https://api.coinpaprika.com/v1/tickers")
-      .then((Response) => Response.json())
-      .then((json) => {
-        setCoin(json); //console.log(json)
-        setLoading(false);
-      });
-  }, []);
-  const onChange = (event) => {
-    setIndex(event.target.value);
+  const [loading, setLoading] = useState(true);
+  const [movies, setMovies] = useState([]);
+  const getMovies = async () => {
+    const json = await (
+      await fetch(
+        "https://yts.gg/api/v2/list_movies.json?minimum_rating=8&sort_by=year",
+      )
+    ).json();
+    console.log(json.data.movies);
+    setMovies(json.data.movies);
+    setLoading(false);
   };
 
-  const usdOnChange = (event) => {
-    setUSD(event.target.value);
-  };
+  useEffect(() => {
+    getMovies();
+  }, []);
+
   return (
     <div className="App">
-      <h1>The Coins {loading ? null : `(${coins.length})`}</h1>
-      <hr />
-      <label htmlFor="usd">USD:</label>
-      <input
-        value={usd}
-        onChange={usdOnChange}
-        id="usd"
-        type="number"
-        disabled={index === "init" ? true : false}
-      />
-      <br />
-      <label htmlFor="convertCoin">Coin:</label>
-      <input
-        value={index === "init" ? "" : parseFloat(usd) / parseFloat(index)}
-        id="convertCoin"
-        disabled={true}
-      />
-
       {loading ? (
-        <strong>Loading...</strong>
+        <h1>Loading...</h1>
       ) : (
-        <select onChange={onChange}>
-          <option value="init">please select Coin...</option>
-          {coins.map((coin) => (
-            <option value={coin.quotes.USD.price} key={coin.id}>
-              {coin.name}({coin.symbol}): ${coin.quotes.USD.price} USD
-            </option>
+        <div>
+          {movies.map((movie) => (
+            <div key={movie.id}>
+              <img src={movie.medium_cover_image} />
+              <h2>{movie.title}</h2>
+              <p>{movie.summary}</p>
+              <ul>
+                {movie.genres.map((g) => (
+                  <li key={g}>{g}</li>
+                ))}
+              </ul>
+              <hr />
+            </div>
           ))}
-        </select>
+        </div>
       )}
     </div>
   );
